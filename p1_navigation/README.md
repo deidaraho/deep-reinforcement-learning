@@ -27,18 +27,37 @@ The task is episodic, and in order to solve the environment, your agent must get
     - Mac OSX: [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/Banana.app.zip)
     - Windows (32-bit): [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/Banana_Windows_x86.zip)
     - Windows (64-bit): [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/Banana_Windows_x86_64.zip)
-    
+
     (_For Windows users_) Check out [this link](https://support.microsoft.com/en-us/help/827218/how-to-determine-whether-a-computer-is-running-a-32-bit-version-or-64) if you need help with determining if your computer is running a 32-bit version or 64-bit version of the Windows operating system.
 
     (_For AWS_) If you'd like to train the agent on AWS (and have not [enabled a virtual screen](https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Training-on-Amazon-Web-Service.md)), then please use [this link](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/Banana_Linux_NoVis.zip) to obtain the environment.
 
-2. Place the file in the DRLND GitHub repository, in the `p1_navigation/` folder, and unzip (or decompress) the file. 
+2. Place the file in the DRLND GitHub repository, in the `p1_navigation/` folder, and unzip (or decompress) the file.
 
 ### Instructions
 
-Follow the instructions in `Navigation.ipynb` to get started with training your own agent!  
+Follow the instructions in `Navigation.ipynb` to get started with training your own agent!
 
-### (Optional) Challenge: Learning from Pixels
+In the project, I implemented two learning algorithms, original DQN and double-DQN, the results and implementation are as following.
+
+### Description
+  - dqp_agent.py: code for agent in the environment
+  - model.py: code for fully-connected network model
+  - dqn.pth: saved model weights for the original DQN model
+  - double_dqn.pth: saved model weights for the Double DQN model
+  - Navigation.ipynb: notebook containing the solution
+
+### Results
+
+The convergence rates are as following, in order to tune the model for better performance, the convergence condition is the last 100 trails' mean score is higher than 15. Based on the following table, at current same parameters, the two algorithms' performances are similar.
+
+|   DQN                      | Double-DQN  |
+|---|---|
+|  ![DQN](./images/dqn.png)   | ![Double-DQN](./images/double_dqn.png) |
+| converge in 537 iterations |  convergen in 585 iterations     |
+| score 22 for testing case  | score 12 for testing case        |
+
+### (Optional) Challenge: Learning from Pixels (have not completed)
 
 After you have successfully completed the project, if you're looking for an additional challenge, you have come to the right place!  In the project, your agent learned from information such as its velocity, along with ray-based perception of objects around its forward direction.  A more challenging task would be to learn directly from pixels!
 

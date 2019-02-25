@@ -16,11 +16,12 @@ LR = 5e-4               # learning rate
 UPDATE_EVERY = 4        # how often to update the network
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+print (device)
 
 class Agent():
     """Interacts with and learns from the environment."""
 
-    def __init__(self, state_size, action_size, seed):
+    def __init__(self, state_size, action_size, seed, dqn_type = "dqn"):
         """Initialize an Agent object.
         
         Params
@@ -37,6 +38,9 @@ class Agent():
         self.qnetwork_local = QNetwork(state_size, action_size, seed).to(device)
         self.qnetwork_target = QNetwork(state_size, action_size, seed).to(device)
         self.optimizer = optim.Adam(self.qnetwork_local.parameters(), lr=LR)
+        
+        # dqn type
+        self.dqn_type = dqn_type
 
         # Replay memory
         self.memory = ReplayBuffer(action_size, BUFFER_SIZE, BATCH_SIZE, seed)
@@ -86,7 +90,15 @@ class Agent():
         states, actions, rewards, next_states, dones = experiences
 
         # Get max predicted Q values (for next states) from target model
-        Q_targets_next = self.qnetwork_target(next_states).detach().max(1)[0].unsqueeze(1)
+        if self.dqn_type == "dqn":
+            Q_targets_next = self.qnetwork_target(next_states).detach().max(1)[0].unsqueeze(1)
+        elif self.dqn_type == "double_dqn":
+            best_local_actions = self.qnetwork_local(states).max(1)[1].unsqueeze(1)
+            double_dqn_targets = self.qnetwork_target(next_states)
+            Q_targets_next = torch.gather(double_dqn_targets, 1, best_local_actions)
+        else:
+            print("unknown learning type")
+            return
         # Compute Q targets for current states 
         Q_targets = rewards + (gamma * Q_targets_next * (1 - dones))
 
