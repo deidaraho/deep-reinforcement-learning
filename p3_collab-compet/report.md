@@ -16,7 +16,7 @@ Here is the list of project codes and results,
 - **./checkpoint_critic_agent_0.pth**: critic network's final weight for player 0
 - **./checkpoint_critic_agent_1.pth**: critic network's final weight for player 1
 
-The following report is written in four parts:
+The following report is written in three parts:
 - **Implementation**
 - **Results**
 - **Ideas for improvement**
